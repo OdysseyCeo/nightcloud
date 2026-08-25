@@ -1,0 +1,248 @@
+:root{
+  --bg:#07080b;
+  --bg-soft:#0e1017;
+  --line:rgba(255,255,255,.09);
+  --text:#f2f3f7;
+  --muted:#8b90a0;
+  --accent:#ffffff;
+  --radius:20px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #191d2b 0%, transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- SPLASH ---------- */
+.splash{
+  position:fixed;
+  inset:0;
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:44px;
+  background:var(--bg);
+  transition:opacity .5s ease, visibility .5s ease;
+}
+.splash--hidden{opacity:0;visibility:hidden}
+
+.splash__logo{
+  width:min(52vw,210px);
+  filter:invert(1);          /* чёрный знак -> белый */
+  animation:breathe 2.6s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{opacity:.85;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.03)}
+}
+
+.loader{
+  width:min(62vw,240px);
+  height:3px;
+  border-radius:99px;
+  background:rgba(255,255,255,.12);
+  overflow:hidden;
+}
+.loader__fill{
+  width:0%;
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(90deg,#6d7cff,#ffffff);
+  box-shadow:0 0 14px rgba(160,175,255,.6);
+  transition:width .18s linear;   /* переопределяется из app.js */
+}
+
+/* ---------- APP ---------- */
+.app{
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .5s ease .1s, transform .5s ease .1s;
+  padding:calc(28px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
+  max-width:640px;
+  margin:0 auto;
+}
+.app--visible{opacity:1;transform:none}
+
+.hero{text-align:center;margin-bottom:30px}
+.hero__welcome{
+  font-size:23px;
+  font-weight:650;
+  letter-spacing:-.02em;
+}
+.hero__welcome span{
+  background:linear-gradient(90deg,#aab4ff,#ffffff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.hero__brand{
+  margin-top:6px;
+  font-size:13px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* ---------- СЕТКА ДОСОК ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.tile{display:flex;flex-direction:column;gap:8px;min-width:0}
+.tile--wide{grid-column:1 / -1}
+
+.tile__label{
+  padding-left:4px;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.board{
+  position:relative;
+  flex:1;
+  min-height:200px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--bg-soft);
+  overflow:hidden;
+  isolation:isolate;
+  transition:transform .18s ease, border-color .18s ease;
+}
+.board:active{transform:scale(.985);border-color:rgba(255,255,255,.2)}
+.board--wide{min-height:230px}
+
+/* фото (или заглушка) занимает всю доску */
+.board__img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+/* затемнение снизу, чтобы текст читался поверх любой картинки */
+.board::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(7,8,11,0) 22%,rgba(7,8,11,.6) 55%,rgba(7,8,11,.94) 100%);
+  pointer-events:none;
+}
+
+.board__text{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:2;
+  padding:14px;
+  font-size:13px;
+  line-height:1.45;
+  color:#e8eaf2;
+  text-shadow:0 1px 10px rgba(0,0,0,.65);
+}
+/* нижний блок широкой доски: цены + подпись */
+.board__info{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  padding:16px;
+}
+.board__info .board__text{position:static;padding:0;font-size:13px}
+
+.prices{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.price{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:9px 4px 10px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:13px;
+  background:rgba(255,255,255,.07);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.price__term{
+  font-size:9.5px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.price__value{
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.02em;
+  background:linear-gradient(90deg,#c3caff,#ffffff);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.board__link{
+  color:#fff;
+  font-weight:600;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.4);
+}
+
+/* ---------- КНОПКИ ---------- */
+.actions{
+  margin-top:18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:52px;
+  padding:0 18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:-.01em;
+  text-align:center;
+  text-decoration:none;
+  transition:transform .16s ease, background .16s ease;
+}
+.btn:active{transform:scale(.98);background:rgba(255,255,255,.1)}
+.btn--primary{
+  border-color:transparent;
+  background:linear-gradient(90deg,#5b6bff,#9aa5ff);
+  color:#fff;
+  box-shadow:0 10px 26px rgba(91,107,255,.3);
+}
+.btn--primary:active{background:linear-gradient(90deg,#5361e6,#8b96f0)}
+
+@media (max-width:340px){
+  .grid{grid-template-columns:1fr}
+  .tile--wide{grid-column:auto}
+}
