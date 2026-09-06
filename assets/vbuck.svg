@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="coin" x1="18" y1="12" x2="102" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5cf0a8"/>
+      <stop offset=".55" stop-color="#2fdd85"/>
+      <stop offset="1" stop-color="#0f8f52"/>
+    </linearGradient>
+        <linearGradient id="shine" x1="34" y1="20" x2="60" y2="70" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="60" cy="60" r="50" fill="#0a2b1b"/>
+  <circle cx="60" cy="60" r="46" fill="url(#coin)"/>
+  <circle cx="60" cy="60" r="46" fill="none" stroke="#0a3f27" stroke-opacity=".45" stroke-width="2"/>
+  <circle cx="60" cy="60" r="37" fill="none" stroke="#06301d" stroke-opacity=".35" stroke-width="2.5"/>
+
+  <path d="M42 42.5h10.4L60 65.2l7.6-22.7H78L64.6 79.5h-9.2L42 42.5z" fill="#052415"/>
+
+  <path d="M60 14a46 46 0 0 0-32.5 78.5A46 46 0 0 1 92.5 27.5 45.85 45.85 0 0 0 60 14z" fill="url(#shine)"/>
+</svg>
